@@ -25,9 +25,9 @@ return (
     </div>
     {/* <div class="card-text"> 
     </div> */}
-    <Link to={`/decks/${deck.id}`} className="btn btn-secondary mr-1">View</Link>
-    <Link to={`/decks/${deck.id}/study`} className="btn btn-primary ml-1">Study</Link>
-    <button className="btn btn-danger float-right">Delete</button>
+    <Link to={`/decks/${deck.id}`} className="btn btn-secondary mr-1 oi oi-eye">View</Link>
+    <Link to={`/decks/${deck.id}/study`} className="btn btn-primary ml-1 oi oi-pencil">Study</Link>
+    <button className="btn btn-danger float-right oi oi-trash">Delete</button>
     </div>
 </div>)
 }

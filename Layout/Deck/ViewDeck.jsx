@@ -11,10 +11,10 @@ import {
 } from "react-router-dom";
 import Deck from "./Deck";
 import { listDecks} from "../../utils/api/index"
+import BreadCrumb from "../BreadCrumb";
 
 export default function ViewDeck({decks})
-{
-    return( <div>
-        I like pancakes
-    </div>)
+
+{   
+    return(<BreadCrumb decks={decks}/>)
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { listCards} from "../../utils/api/index"
 import {
   Link,
   NavLink,
@@ -8,14 +7,69 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-//import { listDecks} from "../../utils/api/index"
+import { readDeck } from "../utils/api";
+//import { listDecks} from "./utils/api/index"
 
-export default function BreadCrumb({deck}){
+export default function BreadCrumb({decks}){
+  const [deck,setDeck] = useState({});
+  const {url, params} = useRouteMatch();
+  let deckId;
+  console.log(params);
+  for(let param in params)
+  {
+    if(param === 'deckId')
+    {
+      deckId = params[param];
+    }
+  
+    console.log(param , params[param], deckId)
+  }
+//   const [deckId, setDeckId] = useState(null);
+//   const [error, setError] = useState(undefined);
+//   const [test,setTest] = useState(true);
+//   const url = useRouteMatch().url;
+//   const subUrls = url.split(`/`);
+//   const path = useRouteMatch().path;
+//   const subPath = path.split(`/`);
+// //   useEffect(() => {
+// //     const abortController = new AbortController();
+// //     readDeck(deckId,abortController.signal).then(setDeck).catch(setError);
 
+// //     return () => abortController.abort();
+// // }, [])
+// // if(error){
+// //   //  return <ErrorMessage error={error} />;
+// //   console.log("very big bad");
+// // }
+
+  
+  
+//   const list = subUrls.map((aSubUrl, index) => {
+//     let className;
+//     // console.log(index)
+//     // console.log(aSubUrl)
+//     // console.log(subPath[index])
+//    if(index >= (subUrls.length-1) ) {
+//     className = "breadcrumb-item active";
+//    } else{ className ="breadcrumb-item" ;}
+//     if(aSubUrl != path[index])
+//     {
+//       if(subPath[index] ==`:deckId`)
+//       {
+//         console.log(aSubUrl)
+//        // setDeckId(() => aSubUrl);
+//     }
+//     else if (aSubUrl != `decks`)
+//     {
+//       return <li className={className} >test</li>
+//     }
+
+//   }})
+//   console.log(url)
     return (
         <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">Home</li>
+  <ol className="breadcrumb">
+    <li className="breadcrumb-item active" aria-current="page">Home</li>
   </ol>
 </nav>
 
