@@ -13,17 +13,62 @@ import { readDeck } from "../utils/api";
 export default function BreadCrumb({decks}){
   const [deck,setDeck] = useState({});
   const {url, params} = useRouteMatch();
+  const [error, setError] = useState(undefined);
+  const subUrls = url.split(`/`);
   let deckId;
-  console.log(params);
   for(let param in params)
   {
     if(param === 'deckId')
     {
       deckId = params[param];
     }
-  
-    console.log(param , params[param], deckId)
   }
+  useEffect(() => {
+    const abortController = new AbortController();
+    readDeck(deckId,abortController.signal).then(setDeck).catch(setError);
+
+    return () => abortController.abort();
+}, [])
+const list = subUrls.map((aSubUrl, index) => {
+  let className;
+ if(index >= (subUrls.length-1) ) {
+  className = "breadcrumb-item active";
+  if(aSubUrl == deckId && deckId != "new")
+  {
+    return <li className={className} >{deck.name}</li>
+  }
+  return <li className={className} >Create Deck</li>
+ } else{ className ="breadcrumb-item" ;}
+ if(aSubUrl != "decks" &&  aSubUrl != "")
+ {
+   if(aSubUrl == deckId)
+  return <li className={className} ><Link to={`${aSubUrl}`}>{deck.name}</Link></li>
+ }
+ else {
+  if(aSubUrl == "")
+  {
+    return <li className={className} ><Link to={`${aSubUrl}`} className="oi oi-home">Home</Link></li>
+  }
+ }
+ 
+})
+    return (
+        <nav aria-label="breadcrumb">
+  <ol className="breadcrumb">
+    {list}
+  </ol>
+</nav>
+    )
+}
+
+
+
+
+
+
+
+
+
 //   const [deckId, setDeckId] = useState(null);
 //   const [error, setError] = useState(undefined);
 //   const [test,setTest] = useState(true);
@@ -65,14 +110,4 @@ export default function BreadCrumb({decks}){
 //     }
 
 //   }})
-//   console.log(url)
-    return (
-        <nav aria-label="breadcrumb">
-  <ol className="breadcrumb">
-    <li className="breadcrumb-item active" aria-current="page">Home</li>
-  </ol>
-</nav>
-
-    )
-
-}
+// //   console.log(url)
