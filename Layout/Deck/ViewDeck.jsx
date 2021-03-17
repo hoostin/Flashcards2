@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CreateDeckButton from "./CreateDeckButton";
+import DeckView from "./DeckView";
 //import Header from "../Header";
 //import NotFound from "../NotFound";
 import {
@@ -12,9 +13,34 @@ import {
 import Deck from "./Deck";
 import { listDecks} from "../../utils/api/index"
 import BreadCrumb from "../BreadCrumb";
+import { readDeck } from "../../utils/api";
 
 export default function ViewDeck({decks})
+{  
+  const [deck,setDeck] = useState({});
+  const {url, params} = useRouteMatch();
+  const [error, setError] = useState(undefined);
+  const subUrls = url.split(`/`);
+  let deckId;
+  for(let param in params)
+  {
+    if(param === 'deckId')
+    {
+      deckId = params[param];
+    }
+  }
+   useEffect(() => {
+  const abortController = new AbortController();
+  readDeck(deckId,abortController.signal).then(setDeck).catch(setError);
 
-{   
-    return(<BreadCrumb decks={decks}/>)
+  return () => abortController.abort();
+}, [])
+console.log(deckId)
+    return(
+      <div>
+    <BreadCrumb decks={decks}/>
+    <DeckView deck={deck} url={url}/>
+    </div>
+    
+    )
 }
