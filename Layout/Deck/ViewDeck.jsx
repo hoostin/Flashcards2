@@ -14,7 +14,7 @@ import Deck from "./Deck";
 import { listDecks} from "../../utils/api/index"
 import BreadCrumb from "../BreadCrumb";
 import { readDeck } from "../../utils/api";
-
+import CardList from "../Card/CardList";
 export default function ViewDeck({decks})
 {  
   const [deck,setDeck] = useState({});
@@ -40,6 +40,7 @@ console.log(deckId)
       <div>
     <BreadCrumb decks={decks}/>
     <DeckView deck={deck} url={url}/>
+    <CardList deck={deck} />
     </div>
     
     )
