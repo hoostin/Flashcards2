@@ -5,15 +5,18 @@ import { readDeck } from "../utils/api";
 
 export default function BreadCrumb({ decks }) {
   const [deck, setDeck] = useState({});
-  const { url, params } = useRouteMatch();
+  const { url, params, path } = useRouteMatch();
   const [error, setError] = useState(undefined);
   const subUrls = url.split(`/`);
+  //console.log(useRouteMatch());
+  console.log(path);
   let deckId;
   for (let param in params) {
     if (param === "deckId") {
       deckId = params[param];
     }
   }
+
   if (error) {
     console.log(error);
   }
@@ -29,17 +32,26 @@ export default function BreadCrumb({ decks }) {
       if (aSubUrl == deckId && deckId != "new") {
         return <li className={className}>{deck.name}</li>;
       }
-      return <li className={className}>Create Deck</li>;
+      let value = "  ";
+      switch (aSubUrl) {
+        case "new":
+          value = "Create Deck";
+          break;
+        case "study":
+          value = "Study";
+      }
+      return <li className={className}>{value}</li>;
     } else {
       className = "breadcrumb-item";
     }
     if (aSubUrl != "decks" && aSubUrl != "") {
-      if (aSubUrl == deckId)
+      if (aSubUrl == deckId) {
         return (
           <li className={className}>
             <Link to={`${aSubUrl}`}>{deck.name}</Link>
           </li>
         );
+      }
     } else {
       if (aSubUrl == "") {
         return (
