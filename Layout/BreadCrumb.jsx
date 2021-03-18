@@ -1,73 +1,63 @@
 import React, { useEffect, useState } from "react";
-import {
-  Link,
-  NavLink,
-  Route,
-  Switch,
-  useParams,
-  useRouteMatch,
-} from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import { readDeck } from "../utils/api";
 //import { listDecks} from "./utils/api/index"
 
-export default function BreadCrumb({decks}){
-  const [deck,setDeck] = useState({});
-  const {url, params} = useRouteMatch();
+export default function BreadCrumb({ decks }) {
+  const [deck, setDeck] = useState({});
+  const { url, params } = useRouteMatch();
   const [error, setError] = useState(undefined);
   const subUrls = url.split(`/`);
   let deckId;
-  for(let param in params)
-  {
-    if(param === 'deckId')
-    {
+  for (let param in params) {
+    if (param === "deckId") {
       deckId = params[param];
     }
   }
+  if (error) {
+    console.log(error);
+  }
   useEffect(() => {
     const abortController = new AbortController();
-    readDeck(deckId,abortController.signal).then(setDeck).catch(setError);
-
+    readDeck(deckId, abortController.signal).then(setDeck).catch(setError);
     return () => abortController.abort();
-}, [])
-const list = subUrls.map((aSubUrl, index) => {
-  let className;
- if(index >= (subUrls.length-1) ) {
-  className = "breadcrumb-item active";
-  if(aSubUrl == deckId && deckId != "new")
-  {
-    return <li className={className} >{deck.name}</li>
-  }
-  return <li className={className} >Create Deck</li>
- } else{ className ="breadcrumb-item" ;}
- if(aSubUrl != "decks" &&  aSubUrl != "")
- {
-   if(aSubUrl == deckId)
-  return <li className={className} ><Link to={`${aSubUrl}`}>{deck.name}</Link></li>
- }
- else {
-  if(aSubUrl == "")
-  {
-    return <li className={className} ><Link to={`${aSubUrl}`} className="oi oi-home">Home</Link></li>
-  }
- }
- 
-})
-    return (
-        <nav aria-label="breadcrumb">
-  <ol className="breadcrumb">
-    {list}
-  </ol>
-</nav>
-    )
+  }, []);
+  const list = subUrls.map((aSubUrl, index) => {
+    let className;
+    if (index >= subUrls.length - 1) {
+      className = "breadcrumb-item active";
+      if (aSubUrl == deckId && deckId != "new") {
+        return <li className={className}>{deck.name}</li>;
+      }
+      return <li className={className}>Create Deck</li>;
+    } else {
+      className = "breadcrumb-item";
+    }
+    if (aSubUrl != "decks" && aSubUrl != "") {
+      if (aSubUrl == deckId)
+        return (
+          <li className={className}>
+            <Link to={`${aSubUrl}`}>{deck.name}</Link>
+          </li>
+        );
+    } else {
+      if (aSubUrl == "") {
+        return (
+          <li className={className}>
+            <Link to={`${aSubUrl}`} className="oi oi-home">
+              Home
+            </Link>
+          </li>
+        );
+      }
+    }
+  });
+  return (
+    <nav aria-label="breadcrumb">
+      <ol className="breadcrumb">{list}</ol>
+    </nav>
+  );
 }
-
-
-
-
-
-
-
-
 
 //   const [deckId, setDeckId] = useState(null);
 //   const [error, setError] = useState(undefined);
@@ -87,8 +77,6 @@ const list = subUrls.map((aSubUrl, index) => {
 // //   console.log("very big bad");
 // // }
 
-  
-  
 //   const list = subUrls.map((aSubUrl, index) => {
 //     let className;
 //     // console.log(index)
