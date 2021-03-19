@@ -27,12 +27,12 @@ export default function ViewDeck({ decks }) {
 
     return () => abortController.abort();
   }, []);
-  console.log(url);
+
   return (
     <div>
       <Switch>
         <Route path={`${path}/study`}>
-          <StudyDeck decks={decks} />
+          <StudyDeck decks={decks} deck={deck} />
         </Route>
         <Route path={`${path}`}>
           <BreadCrumb decks={decks} />
