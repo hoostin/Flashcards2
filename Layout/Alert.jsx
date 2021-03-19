@@ -2,41 +2,35 @@ import React from "react";
 //import Header from "../Header";
 //import NotFound from "../NotFound";
 
-/**
- *   const [alertList,setList] = useState([]);
-  const alertListRef = useRef(alertList);
-  alertListRef.current = alertList; 
-   let test = alertListRef.current;
- 
- function onClick(){
-   const index = alertListRef.current.length;
-    test.push(<Alert key={index} test={index}/>)
-      setList([ ...test])
-      console.log(test[index].props)
-    window.setTimeout(function() {
-      const currentTest =  alertListRef.current;
-     removeTest(currentTest)
-     }, 2000);
-   }
-   function removeTest(test)
-   {
-  if(test.length === 0)
-  {
-    setList([])
-  }
-  else{
-    test.shift();
-    setList([...test])
-  }
-    
-   }
-    return (
-      <div>
-      <button onClick={onClick} >test</button>
-      {test}
-      </div>
-    )
- */
+// const [alertList, setList] = useState([]);
+// const alertListRef = useRef(alertList);
+// alertListRef.current = alertList;
+// let test = alertListRef.current;
+
+// function onClick() {
+//   const index = alertListRef.current.length;
+//   test.push(<Alert key={index} test={index} />);
+//   setList([...test]);
+//   console.log(test[index].props);
+//   window.setTimeout(function () {
+//     const currentTest = alertListRef.current;
+//     removeTest(currentTest);
+//   }, 2000);
+// }
+// function removeTest(test) {
+//   if (test.length === 0) {
+//     setList([]);
+//   } else {
+//     test.shift();
+//     setList([...test]);
+//   }
+// }
+// return (
+//   <div>
+//     <button onClick={onClick}>test</button>
+//     {test}
+//   </div>
+// );
 
 // import {
 //   Link,
