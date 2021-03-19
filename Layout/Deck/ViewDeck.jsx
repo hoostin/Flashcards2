@@ -27,7 +27,7 @@ export default function ViewDeck({ decks }) {
 
     return () => abortController.abort();
   }, []);
-  console.log(deckId);
+  console.log(url);
   return (
     <div>
       <Switch>

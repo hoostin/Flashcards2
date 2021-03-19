@@ -9,7 +9,7 @@ export default function BreadCrumb({ decks }) {
   const [error, setError] = useState(undefined);
   const subUrls = url.split(`/`);
   //console.log(useRouteMatch());
-  console.log(path);
+  // console.log(path);
   let deckId;
   for (let param in params) {
     if (param === "deckId") {
@@ -26,6 +26,7 @@ export default function BreadCrumb({ decks }) {
     return () => abortController.abort();
   }, []);
   const list = subUrls.map((aSubUrl, index) => {
+    //console.log(aSubUrl);
     let className;
     if (index >= subUrls.length - 1) {
       className = "breadcrumb-item active";
@@ -48,7 +49,7 @@ export default function BreadCrumb({ decks }) {
       if (aSubUrl == deckId) {
         return (
           <li className={className}>
-            <Link to={`${aSubUrl}`}>{deck.name}</Link>
+            <Link to={`/decks/${aSubUrl}`}>{deck.name}</Link>
           </li>
         );
       }
