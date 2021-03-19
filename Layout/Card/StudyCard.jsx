@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import NextButton from "./NextButton";
 
 export default function StudyCard({ deck }) {
   const [cardNum, setCardNum] = useState(0);
@@ -27,10 +28,19 @@ export default function StudyCard({ deck }) {
             } `}</h5>
           </div>
           <p>{content}</p>
-          <button className="btn btn-primary ml-1 oi oi-arrow-right">
-            Next
+          <button
+            className="btn btn-secondary ml-1 oi oi-arrow-thick-top"
+            onClick={() => setFlip(!flip)}
+          >
+            Flip
           </button>
-          <button className="btn btn-primary ml-1 oi oi-arrow-up">Flip</button>
+          <NextButton
+            flip={flip}
+            setFlip={setFlip}
+            length={deck.cards.length}
+            cardNum={cardNum}
+            setCardNum={setCardNum}
+          />
         </div>
       </div>
     );
