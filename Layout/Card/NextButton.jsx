@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export default function NextButton({
   flip,
@@ -6,11 +7,29 @@ export default function NextButton({
   length,
   cardNum,
   setCardNum,
+  setIsVisible,
 }) {
+  const history = useHistory();
+
+  function onClick() {
+    if (cardNum < length - 1) {
+      setCardNum(cardNum + 1);
+      setFlip(false);
+      setIsVisible(false);
+    } else {
+      if (window.confirm("Restart cards?")) {
+        setCardNum(0);
+        setIsVisible(false);
+      } else {
+        history.push("/");
+      }
+    }
+  }
+
   return (
     <button
       className="btn btn-primary ml-1 oi oi-arrow-thick-right"
-      onClick={() => setCardNum(cardNum + 1)}
+      onClick={() => onClick()}
     >
       Next
     </button>

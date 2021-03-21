@@ -4,7 +4,13 @@ import NextButton from "./NextButton";
 export default function StudyCard({ deck }) {
   const [cardNum, setCardNum] = useState(0);
   const [flip, setFlip] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   let content = "";
+  if (deck.cards != undefined) {
+    console.log(deck.cards[cardNum]);
+  } else {
+    console.log("render in progress");
+  }
   //   const [content, setContent] = useState("");
 
   if (flip) {
@@ -30,17 +36,23 @@ export default function StudyCard({ deck }) {
           <p>{content}</p>
           <button
             className="btn btn-secondary ml-1 oi oi-arrow-thick-top"
-            onClick={() => setFlip(!flip)}
+            onClick={() => {
+              setFlip(!flip);
+              setIsVisible(!isVisible);
+            }}
           >
             Flip
           </button>
-          <NextButton
-            flip={flip}
-            setFlip={setFlip}
-            length={deck.cards.length}
-            cardNum={cardNum}
-            setCardNum={setCardNum}
-          />
+          {isVisible ? (
+            <NextButton
+              flip={flip}
+              setFlip={setFlip}
+              length={deck.cards.length}
+              cardNum={cardNum}
+              setCardNum={setCardNum}
+              setIsVisible={setIsVisible}
+            />
+          ) : null}
         </div>
       </div>
     );
