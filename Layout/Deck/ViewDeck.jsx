@@ -12,7 +12,7 @@ import CardList from "../Card/CardList";
 import StudyDeck from "./StudyDeck";
 import EditDeck from "./EditDeck";
 
-export default function ViewDeck({ decks }) {
+export default function ViewDeck({ decks, setDecks }) {
   const [deck, setDeck] = useState({});
   const { path, url, params } = useRouteMatch();
   const [error, setError] = useState(undefined);
@@ -34,7 +34,13 @@ export default function ViewDeck({ decks }) {
     <div>
       <Switch>
         <Route path={`${path}/edit`}>
-          <EditDeck decks={decks} />
+          <EditDeck
+            decks={decks}
+            deck={deck}
+            setDeck={setDeck}
+            deckUrl={url}
+            setDecks={setDecks}
+          />
         </Route>
         <Route path={`${path}/study`}>
           <StudyDeck decks={decks} deck={deck} />

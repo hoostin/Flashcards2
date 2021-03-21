@@ -20,7 +20,7 @@ function Layout() {
         {/* TODO: Implement the screen starting here */}
         <Switch>
           <Route path="/decks/:deckId">
-            <ViewDeck decks={decks} />
+            <ViewDeck decks={decks} setDecks={setDecks} />
           </Route>
           <Route path="/" exact={true}>
             <DeckList decks={decks} setDecks={setDecks} />

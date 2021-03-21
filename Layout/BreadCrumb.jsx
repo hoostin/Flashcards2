@@ -24,49 +24,53 @@ export default function BreadCrumb({ decks }) {
     const abortController = new AbortController();
     readDeck(deckId, abortController.signal).then(setDeck).catch(setError);
     return () => abortController.abort();
-  }, []);
+  }, [decks]);
   const list = subUrls.map((aSubUrl, index) => {
     //console.log(aSubUrl);
-    let className;
-    if (index >= subUrls.length - 1) {
-      className = "breadcrumb-item active";
-      if (aSubUrl == deckId && deckId != "new") {
-        return <li className={className}>{deck.name}</li>;
+    if (deck != undefined) {
+      let className;
+      if (index >= subUrls.length - 1) {
+        className = "breadcrumb-item active";
+        if (aSubUrl == deckId && deckId != "new") {
+          return <li className={className}>{deck.name}</li>;
+        }
+        let value = "  ";
+        switch (aSubUrl) {
+          case "new":
+            value = "Create Deck";
+            break;
+          case "study":
+            value = "Study";
+            break;
+          case "edit":
+            value = "Edit Deck";
+            break;
+        }
+        return <li className={className}>{value}</li>;
+      } else {
+        className = "breadcrumb-item";
       }
-      let value = "  ";
-      switch (aSubUrl) {
-        case "new":
-          value = "Create Deck";
-          break;
-        case "study":
-          value = "Study";
-          break;
-        case "edit":
-          value = "Edit Deck";
-          break;
+      if (aSubUrl != "decks" && aSubUrl != "") {
+        if (aSubUrl == deckId) {
+          return (
+            <li className={className}>
+              <Link to={`/decks/${aSubUrl}`}>{deck.name}</Link>
+            </li>
+          );
+        }
+      } else {
+        if (aSubUrl == "") {
+          return (
+            <li className={className}>
+              <Link to={`${aSubUrl}`} className="oi oi-home">
+                Home
+              </Link>
+            </li>
+          );
+        }
       }
-      return <li className={className}>{value}</li>;
     } else {
-      className = "breadcrumb-item";
-    }
-    if (aSubUrl != "decks" && aSubUrl != "") {
-      if (aSubUrl == deckId) {
-        return (
-          <li className={className}>
-            <Link to={`/decks/${aSubUrl}`}>{deck.name}</Link>
-          </li>
-        );
-      }
-    } else {
-      if (aSubUrl == "") {
-        return (
-          <li className={className}>
-            <Link to={`${aSubUrl}`} className="oi oi-home">
-              Home
-            </Link>
-          </li>
-        );
-      }
+      return null;
     }
   });
   return (
