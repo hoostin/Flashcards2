@@ -40,6 +40,10 @@ export default function BreadCrumb({ decks }) {
           break;
         case "study":
           value = "Study";
+          break;
+        case "edit":
+          value = "Edit Deck";
+          break;
       }
       return <li className={className}>{value}</li>;
     } else {

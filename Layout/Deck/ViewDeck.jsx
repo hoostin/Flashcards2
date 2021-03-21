@@ -10,6 +10,8 @@ import BreadCrumb from "../BreadCrumb";
 import { readDeck } from "../../utils/api";
 import CardList from "../Card/CardList";
 import StudyDeck from "./StudyDeck";
+import EditDeck from "./EditDeck";
+
 export default function ViewDeck({ decks }) {
   const [deck, setDeck] = useState({});
   const { path, url, params } = useRouteMatch();
@@ -31,6 +33,9 @@ export default function ViewDeck({ decks }) {
   return (
     <div>
       <Switch>
+        <Route path={`${path}/edit`}>
+          <EditDeck decks={decks} />
+        </Route>
         <Route path={`${path}/study`}>
           <StudyDeck decks={decks} deck={deck} />
         </Route>
