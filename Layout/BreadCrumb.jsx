@@ -37,13 +37,23 @@ export default function BreadCrumb({ decks }) {
         let value = "  ";
         switch (aSubUrl) {
           case "new":
-            value = "Create Deck";
+            if (subUrls[index - 1] === "cards") {
+              value = "Add Card";
+            } else {
+              value = "Create Deck";
+            }
+
             break;
           case "study":
             value = "Study";
             break;
           case "edit":
-            value = "Edit Deck";
+            if (subUrls[index - 2] === "cards") {
+              value = `Edit Card ${subUrls[index - 1]}`;
+            } else {
+              value = "Edit Deck";
+            }
+
             break;
         }
         return <li className={className}>{value}</li>;
@@ -79,44 +89,3 @@ export default function BreadCrumb({ decks }) {
     </nav>
   );
 }
-
-//   const [deckId, setDeckId] = useState(null);
-//   const [error, setError] = useState(undefined);
-//   const [test,setTest] = useState(true);
-//   const url = useRouteMatch().url;
-//   const subUrls = url.split(`/`);
-//   const path = useRouteMatch().path;
-//   const subPath = path.split(`/`);
-// //   useEffect(() => {
-// //     const abortController = new AbortController();
-// //     readDeck(deckId,abortController.signal).then(setDeck).catch(setError);
-
-// //     return () => abortController.abort();
-// // }, [])
-// // if(error){
-// //   //  return <ErrorMessage error={error} />;
-// //   console.log("very big bad");
-// // }
-
-//   const list = subUrls.map((aSubUrl, index) => {
-//     let className;
-//     // console.log(index)
-//     // console.log(aSubUrl)
-//     // console.log(subPath[index])
-//    if(index >= (subUrls.length-1) ) {
-//     className = "breadcrumb-item active";
-//    } else{ className ="breadcrumb-item" ;}
-//     if(aSubUrl != path[index])
-//     {
-//       if(subPath[index] ==`:deckId`)
-//       {
-//         console.log(aSubUrl)
-//        // setDeckId(() => aSubUrl);
-//     }
-//     else if (aSubUrl != `decks`)
-//     {
-//       return <li className={className} >test</li>
-//     }
-
-//   }})
-// //   console.log(url)

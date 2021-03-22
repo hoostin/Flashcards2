@@ -20,7 +20,10 @@ export default function CardView({ card: { id, front, back } }) {
         </div>
       </div>
       <div className=" float-right text-right">
-        <Link to={`${url}`} className="btn btn-secondary ml-1 oi oi-pencil">
+        <Link
+          to={`${url}/cards/${id}/edit`}
+          className="btn btn-secondary ml-1 oi oi-pencil"
+        >
           Edit
         </Link>
         <button className="btn btn-danger float-right oi oi-trash ml-3"></button>

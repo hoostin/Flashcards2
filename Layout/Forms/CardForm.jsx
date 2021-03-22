@@ -7,13 +7,26 @@ import {
   useHistory,
   useRouteMatch,
 } from "react-router-dom";
-import { updateCard, createCard } from "../../utils/api";
+import { updateCard, createCard, readCard } from "../../utils/api";
 
 export default function CardForm({ decks, setDecks, deck, setDeck, deckUrl }) {
   let decksTemp = decks;
   const deckTemp = deck;
   const [formData, setFormData] = useState({ front: "", back: "" });
   const history = useHistory();
+  const { url, params, path } = useRouteMatch();
+  const subUrls = url.split(`/`);
+  const [edit, setEdit] = useState(false);
+  // if edit then setFormdata to current card using card id from url
+  useEffect(() => {
+    if (subUrls[subUrls.length - 1] === "edit") {
+      setEdit(true);
+      readCard(subUrls[subUrls.length - 2])
+        .then(setFormData)
+        .catch(console.log("Bad magnitude 10"));
+    }
+  }, []);
+
   function handleChange({ target }) {
     setFormData(() => ({
       ...formData,
@@ -23,9 +36,18 @@ export default function CardForm({ decks, setDecks, deck, setDeck, deckUrl }) {
   function submitHandler(event) {
     event.preventDefault();
     const abortController = new AbortController();
-    createCard(deck.id, formData, abortController.signal)
+    let theArguments = [deck.id, formData, abortController.signal];
+    let handleFunction = createCard;
+    if (edit) {
+      theArguments = [formData, abortController.signal];
+      handleFunction = updateCard;
+    }
+    handleFunction(...theArguments) // change to update card for edit
       .then(setFormData)
       .then(() => {
+        deckTemp.cards = deckTemp.cards.filter(
+          (card) => card.id != formData.id
+        );
         deckTemp.cards.push(formData);
         setDeck(deckTemp);
       })
@@ -33,8 +55,15 @@ export default function CardForm({ decks, setDecks, deck, setDeck, deckUrl }) {
         decksTemp = decksTemp.filter((theDeck) => theDeck.id != deck.id);
         decksTemp.push(deckTemp);
         setDecks(decksTemp);
-        setFormData({ front: "", back: "" });
-      });
+        if (!edit) {
+          setFormData({ front: "", back: "" });
+        } else {
+          history.push(deckUrl);
+        }
+        // if edit got to view screen
+      })
+      .catch(console.log("Bad magnitude 10"));
+    return () => abortController.abort();
   }
   return (
     <form name="createDeck" onSubmit={submitHandler}>
