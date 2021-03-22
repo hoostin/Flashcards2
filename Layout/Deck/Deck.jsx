@@ -2,17 +2,32 @@ import React, { useEffect, useState } from "react";
 //import CreateDeckButton from "./CreateDeckButton";
 //import Header from "../Header";
 //import NotFound from "../NotFound";
-import { listCards } from "../../utils/api/index";
-import { Link } from "react-router-dom";
+import { deleteDeck, listCards } from "../../utils/api/index";
+import { Link, useHistory } from "react-router-dom";
 //import { listDecks} from "../../utils/api/index"
 
-export default function Deck({ deck }) {
+export default function Deck({ deck, decks, setDecks }) {
   let length = 0;
+  const history = useHistory();
   if (deck.cards != undefined) {
     length = deck.cards.length;
   }
   const cardCount = length;
+  function onClick(event) {
+    const abortController = new AbortController();
+    event.preventDefault();
+    if (window.confirm("You sure you want to delete Deck?")) {
+      deleteDeck(deck.id, abortController.signal)
+        .then((response) => {
+          const tempDecks = decks.filter((theDeck) => theDeck.id != deck.id);
+          setDecks(() => tempDecks);
+          history.push(`/`);
+        })
+        .catch(console.log("Bad magnitude 10"));
+    }
 
+    return () => abortController.abort();
+  }
   return (
     <div className="card mb-3">
       <div className="card-body">
@@ -34,7 +49,10 @@ export default function Deck({ deck }) {
         >
           Study
         </Link>
-        <button className="btn btn-danger float-right oi oi-trash">
+        <button
+          className="btn btn-danger float-right oi oi-trash"
+          onClick={onClick}
+        >
           Delete
         </button>
       </div>

@@ -5,13 +5,30 @@ import {
   NavLink,
   Route,
   Switch,
+  useHistory,
   useParams,
   useRouteMatch,
 } from "react-router-dom";
 import Deck from "./Deck";
-import { listDecks } from "../../utils/api/index";
+import { deleteDeck, listDecks } from "../../utils/api/index";
 
-export default function DeckView({ deck, url }) {
+export default function DeckView({ deck, url, decks, setDecks }) {
+  const history = useHistory();
+  function onClick(event) {
+    const abortController = new AbortController();
+    event.preventDefault();
+    if (window.confirm("You sure you want to delete Deck?")) {
+      deleteDeck(deck.id, abortController.signal)
+        .then((response) => {
+          const tempDecks = decks.filter((theDeck) => theDeck.id != deck.id);
+          setDecks(() => tempDecks);
+          history.push(`/`);
+        })
+        .catch(console.log("Bad magnitude 10"));
+    }
+
+    return () => abortController.abort();
+  }
   return (
     <div className="card  border-0">
       <div className="card-body px-0">
@@ -36,7 +53,10 @@ export default function DeckView({ deck, url }) {
         >
           Add Cards
         </Link>
-        <button className="btn btn-danger float-right oi oi-trash"></button>
+        <button
+          className="btn btn-danger float-right oi oi-trash"
+          onClick={onClick}
+        ></button>
       </div>
     </div>
   );

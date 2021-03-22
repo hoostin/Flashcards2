@@ -47,7 +47,7 @@ export default function ViewDeck({ decks, setDecks }) {
         </Route>
         <Route path={`${path}`}>
           <BreadCrumb decks={decks} />
-          <DeckView deck={deck} url={url} />
+          <DeckView deck={deck} url={url} decks={decks} setDecks={setDecks} />
           <CardList deck={deck} deckId={deckId} />
         </Route>
       </Switch>
