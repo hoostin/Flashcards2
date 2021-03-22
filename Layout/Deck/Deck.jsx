@@ -7,7 +7,11 @@ import { Link } from "react-router-dom";
 //import { listDecks} from "../../utils/api/index"
 
 export default function Deck({ deck }) {
-  const cardCount = deck.cards.length;
+  let length = 0;
+  if (deck.cards != undefined) {
+    length = deck.cards.length;
+  }
+  const cardCount = length;
 
   return (
     <div className="card mb-3">

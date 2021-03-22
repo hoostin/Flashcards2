@@ -11,6 +11,7 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
+import CreateDeck from "./Deck/CreateDeck";
 function Layout() {
   const [decks, setDecks] = useState([]);
   return (
@@ -19,6 +20,9 @@ function Layout() {
       <div className="container">
         {/* TODO: Implement the screen starting here */}
         <Switch>
+          <Route path="/decks/new">
+            <CreateDeck decks={decks} setDecks={setDecks} />
+          </Route>
           <Route path="/decks/:deckId">
             <ViewDeck decks={decks} setDecks={setDecks} />
           </Route>

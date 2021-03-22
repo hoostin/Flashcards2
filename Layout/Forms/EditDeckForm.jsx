@@ -65,9 +65,9 @@ export default function EditDeckForm({
       <div className="form-group">
         <label htmlFor="description">Description </label>
         <textarea
-          id="name"
+          id="description"
           type="text"
-          name="name"
+          name="description"
           value={description}
           className="form-control"
           onChange={handleDescriptionChange}
