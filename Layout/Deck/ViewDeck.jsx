@@ -11,6 +11,7 @@ import { readDeck } from "../../utils/api";
 import CardList from "../Card/CardList";
 import StudyDeck from "./StudyDeck";
 import EditDeck from "./EditDeck";
+import CreateCard from "../Card/CreateCard";
 
 export default function ViewDeck({ decks, setDecks }) {
   const [deck, setDeck] = useState({});
@@ -33,6 +34,15 @@ export default function ViewDeck({ decks, setDecks }) {
   return (
     <div>
       <Switch>
+        <Route path={`${path}/cards/new`}>
+          <CreateCard
+            decks={decks}
+            deck={deck}
+            setDeck={setDeck}
+            deckUrl={url}
+            setDecks={setDecks}
+          />
+        </Route>
         <Route path={`${path}/edit`}>
           <EditDeck
             decks={decks}
