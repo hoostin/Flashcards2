@@ -15,7 +15,7 @@ import CreateDeck from "./Deck/CreateDeck";
 function Layout() {
   const [decks, setDecks] = useState([]);
   return (
-    <>
+    <div>
       <Header />
       <div className="container">
         {/* TODO: Implement the screen starting here */}
@@ -34,7 +34,7 @@ function Layout() {
           </Route>
         </Switch>
       </div>
-    </>
+    </div>
   );
 }
 
