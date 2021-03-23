@@ -1,36 +1,36 @@
 import React, { useEffect, useState } from "react";
 import NextButton from "./NextButton";
 
-export default function StudyCard({ deck }) {
+export default function StudyCard({ cards }) {
   const [cardNum, setCardNum] = useState(0);
   const [flip, setFlip] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   let content = "";
-  if (deck.cards != undefined) {
-    console.log(deck.cards[cardNum]);
-  } else {
-    console.log("render in progress");
-  }
+  // if (deck.cards != undefined) {
+  //   console.log(deck.cards[cardNum]);
+  // } else {
+  //   console.log("render in progress");
+  // }
   //   const [content, setContent] = useState("");
 
   if (flip) {
-    if (deck.cards != undefined) {
-      content = deck.cards[cardNum].back;
+    if (cards.length != 0) {
+      content = cards[cardNum].back;
     }
   } else {
-    if (deck.cards != undefined) {
-      content = deck.cards[cardNum].front;
+    if (cards.length != 0) {
+      content = cards[cardNum].front;
     }
     // setContent("test");
     // return null;
   }
-  if (deck.cards != undefined) {
+  if (cards.length != 0) {
     return (
       <div className="card mb-3">
         <div className="card-body">
           <div className="d-flex  justify-content-between ">
             <h5 className="card-title">{`Card ${cardNum + 1} of ${
-              deck.cards.length
+              cards.length
             } `}</h5>
           </div>
           <p>{content}</p>
@@ -47,7 +47,7 @@ export default function StudyCard({ deck }) {
             <NextButton
               flip={flip}
               setFlip={setFlip}
-              length={deck.cards.length}
+              length={cards.length}
               cardNum={cardNum}
               setCardNum={setCardNum}
               setIsVisible={setIsVisible}
